@@ -1,18 +1,9 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Calendar, 
-  Stethoscope, 
-  Building2, 
-  MessageSquare, 
-  ShoppingBag, 
-  Pill, 
-  Users, 
-  User, 
-  Settings, 
-  HelpCircle,
-  X
+import {
+  LayoutDashboard, Calendar, Stethoscope, Building2,
+  MessageSquare, ShoppingBag, Pill, Users, User,
+  Settings, HelpCircle, X
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -40,17 +31,17 @@ const Sidebar = ({ isOpen, onClose }) => {
   return (
     <>
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
           onClick={onClose}
         />
       )}
 
-      <aside 
+      <aside
         className={`
-          w-64 bg-white h-screen flex flex-col border-r border-gray-200 
+          w-64 bg-white h-screen flex flex-col border-r border-gray-200
           fixed left-0 top-0 z-50 transition-transform duration-300
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+          ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0
         `}
       >
@@ -64,7 +55,6 @@ const Sidebar = ({ isOpen, onClose }) => {
               <p className="text-xs text-gray-400">Healthcare Platform</p>
             </div>
           </div>
-          
           <button onClick={onClose} className="lg:hidden text-gray-500 hover:text-gray-700">
             <X className="w-6 h-6" />
           </button>

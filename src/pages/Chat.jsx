@@ -3,9 +3,9 @@ import PagePlaceholder from '../components/PagePlaceholder';
 import { MessageSquare } from 'lucide-react';
 
 const Chat = () => (
-  <PagePlaceholder 
-    title="Chat" 
-    description="در این بخش می‌توانید با پزشکان و کلینیک‌ها چت کنید."
+  <PagePlaceholder
+    title="Chat"
+    description="در این بخش می‌توانید با پزشکان چت کنید."
     icon={MessageSquare}
   />
 );

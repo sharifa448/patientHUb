@@ -43,13 +43,36 @@ export const doctorsData = [
     avatar: 'https://i.pravatar.cc/150?img=45',
     nextAvailable: 'THURSDAY, MARCH 24',
   },
+  {
+    id: 5,
+    name: 'Dr. Rajesh Kumar',
+    specialty: 'Neurology',
+    title: 'Consultant',
+    address: 'Bangsar, Kuala Lumpur, 59100, Malaysia',
+    phone: '+60122223333',
+    language: 'English, Tamil',
+    avatar: 'https://i.pravatar.cc/150?img=51',
+    nextAvailable: 'FRIDAY, MARCH 25',
+  },
+  {
+    id: 6,
+    name: 'Dr. Lee Wei Ming',
+    specialty: 'Ophthalmology',
+    title: 'Senior Consultant',
+    address: 'Cheras, Kuala Lumpur, 56000, Malaysia',
+    phone: '+60133334444',
+    language: 'English, Chinese, Malay',
+    avatar: 'https://i.pravatar.cc/150?img=68',
+    nextAvailable: 'SATURDAY, MARCH 26',
+  },
 ];
 
 export const specialties = [
   'Anesthesiology',
+  'Cardiology',
   'Dermatology',
   'Emergency medicine',
   'Neurology',
-  'Consultation',
+  'Obstetrics and Gynaecology',
   'Ophthalmology',
 ];

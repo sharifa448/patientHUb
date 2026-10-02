@@ -52,64 +52,48 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* کارت ۱: Promotion by Clinics */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-700">Promotion by Clinics</h3>
             <Info className="w-5 h-5 text-gray-400" />
           </div>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="w-full md:w-1/2">
-              <DonutChart data={clinicData} />
-            </div>
-            <div className="w-full md:w-1/2">
-              <ChartLegend items={clinicData} />
-            </div>
+            <div className="w-full md:w-1/2"><DonutChart data={clinicData} /></div>
+            <div className="w-full md:w-1/2"><ChartLegend items={clinicData} /></div>
           </div>
           <button className="mt-4 bg-slate-500 hover:bg-slate-600 text-white text-sm font-semibold px-6 py-2 rounded-md transition">
             MORE DETAILS
           </button>
         </div>
 
-        {/* کارت ۲: Promotion by Pharmacies */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-700">Promotion by Pharmacies</h3>
             <Info className="w-5 h-5 text-gray-400" />
           </div>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="w-full md:w-1/2">
-              <DonutChart data={pharmacyData} />
-            </div>
-            <div className="w-full md:w-1/2">
-              <ChartLegend items={pharmacyData} />
-            </div>
+            <div className="w-full md:w-1/2"><DonutChart data={pharmacyData} /></div>
+            <div className="w-full md:w-1/2"><ChartLegend items={pharmacyData} /></div>
           </div>
           <button className="mt-4 bg-slate-500 hover:bg-slate-600 text-white text-sm font-semibold px-6 py-2 rounded-md transition">
             MORE DETAILS
           </button>
         </div>
 
-        {/* کارت ۳: Smart Market Usage */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-semibold text-gray-700">Smart Market Usage by app</h3>
             <Info className="w-5 h-5 text-gray-400" />
           </div>
           <div className="flex flex-col md:flex-row items-center gap-4">
-            <div className="w-full md:w-1/2">
-              <DonutChart data={marketData} />
-            </div>
-            <div className="w-full md:w-1/2">
-              <ChartLegend items={marketData} />
-            </div>
+            <div className="w-full md:w-1/2"><DonutChart data={marketData} /></div>
+            <div className="w-full md:w-1/2"><ChartLegend items={marketData} /></div>
           </div>
           <button className="mt-4 bg-slate-500 hover:bg-slate-600 text-white text-sm font-semibold px-6 py-2 rounded-md transition">
             SEE ALL REFERRALS
           </button>
         </div>
 
-        {/* کارت ۴: Health Index */}
         <div className="bg-white rounded-xl shadow-sm p-6">
           <h3 className="font-semibold text-gray-700 mb-2">Health Index</h3>
           <p className="text-2xl font-bold text-gray-800 mb-4">
@@ -128,6 +112,7 @@ const Dashboard = () => {
                     color: '#fff',
                     fontSize: '12px',
                   }}
+                  formatter={(value) => [`${value}`, 'Health']}
                 />
                 <Line
                   type="monotone"

@@ -7,10 +7,16 @@ import { Search, Map, List } from 'lucide-react';
 
 const FindClinic = () => {
   const [viewMode, setViewMode] = useState('map');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Derived State - بدون useEffect
+  const filteredClinics = clinicsData.filter((clinic) =>
+    clinic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    clinic.address.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <DashboardLayout title="Find a Clinic">
-      {/* هدر گرادیان */}
       <div className="bg-gradient-to-br from-purple-700 via-purple-500 to-pink-500 rounded-xl p-8 mb-6 text-white">
         <h1 className="text-3xl font-bold text-center mb-2">Find a Clinic</h1>
         <p className="text-center text-sm opacity-90 mb-6">
@@ -18,26 +24,22 @@ const FindClinic = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
-          <div className="relative">
+          <div className="relative md:col-span-2">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Clinic name"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Clinic name or address"
               className="w-full pl-10 pr-3 py-2 rounded-lg text-sm text-gray-800 focus:outline-none"
             />
           </div>
-          <input
-            type="text"
-            placeholder="Zip Code or Neighborhood"
-            className="px-3 py-2 rounded-lg text-sm text-gray-800 focus:outline-none"
-          />
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg text-sm transition">
             SEARCH
           </button>
         </div>
       </div>
 
-      {/* تب‌های Map/List */}
       <div className="flex justify-center gap-2 mb-6">
         <button
           onClick={() => setViewMode('map')}
@@ -47,8 +49,7 @@ const FindClinic = () => {
               : 'bg-white text-gray-600 border'
           }`}
         >
-          <Map className="w-4 h-4" />
-          Map
+          <Map className="w-4 h-4" /> Map
         </button>
         <button
           onClick={() => setViewMode('list')}
@@ -58,14 +59,11 @@ const FindClinic = () => {
               : 'bg-white text-gray-600 border'
           }`}
         >
-          <List className="w-4 h-4" />
-          List
+          <List className="w-4 h-4" /> List
         </button>
       </div>
 
-      {/* محتوای اصلی */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* سایدبار فیلترها */}
         <aside className="lg:col-span-1 bg-white rounded-xl shadow-sm p-5 h-fit">
           <h3 className="font-bold text-gray-700 mb-4">Filter By</h3>
 
@@ -86,35 +84,6 @@ const FindClinic = () => {
                 <option>Cardiology</option>
                 <option>Dermatology</option>
                 <option>Pediatrics</option>
-                <option>Neurology</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Gender</label>
-              <select className="w-full border rounded-lg p-2 text-sm">
-                <option>All</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Condition</label>
-              <select className="w-full border rounded-lg p-2 text-sm">
-                <option>All</option>
-                <option>Heart</option>
-                <option>Diabetes</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Languages</label>
-              <select className="w-full border rounded-lg p-2 text-sm">
-                <option>All</option>
-                <option>English</option>
-                <option>Malay</option>
-                <option>Chinese</option>
               </select>
             </div>
           </div>
@@ -127,26 +96,18 @@ const FindClinic = () => {
               <label className="flex items-center gap-2"><input type="checkbox" /> Adults</label>
             </div>
           </div>
-
-          <div className="mt-6">
-            <h4 className="text-sm font-semibold text-gray-700 mb-2">View Only</h4>
-            <div className="space-y-1 text-sm">
-              <label className="flex items-center gap-2"><input type="checkbox" /> Online Scheduling</label>
-              <label className="flex items-center gap-2"><input type="checkbox" /> Primary Care</label>
-            </div>
-          </div>
         </aside>
 
-        {/* نقشه یا لیست */}
         <div className="lg:col-span-3">
+          <p className="text-sm text-gray-500 mb-4">
+            {filteredClinics.length} clinic(s) found
+          </p>
           {viewMode === 'map' ? (
-            <MapView clinics={clinicsData} />
+            <MapView clinics={filteredClinics} />
           ) : (
-            <div>
-              {clinicsData.map((clinic) => (
-                <ClinicCard key={clinic.id} clinic={clinic} />
-              ))}
-            </div>
+            filteredClinics.map((clinic) => (
+              <ClinicCard key={clinic.id} clinic={clinic} />
+            ))
           )}
         </div>
       </div>

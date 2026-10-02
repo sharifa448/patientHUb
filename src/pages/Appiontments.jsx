@@ -3,9 +3,9 @@ import PagePlaceholder from '../components/PagePlaceholder';
 import { Calendar } from 'lucide-react';
 
 const Appointments = () => (
-  <PagePlaceholder 
-    title="Appointments" 
-    description="در این بخش می‌توانید نوبت‌های رزرو شده خود را مشاهده و مدیریت کنید."
+  <PagePlaceholder
+    title="Appointments"
+    description="در این بخش می‌توانید نوبت‌های رزرو شده خود را مشاهده کنید."
     icon={Calendar}
   />
 );

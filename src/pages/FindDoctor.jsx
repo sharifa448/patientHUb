@@ -6,6 +6,28 @@ import { Search, Map, List } from 'lucide-react';
 
 const FindDoctor = () => {
   const [viewMode, setViewMode] = useState('list');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedSpecialty, setSelectedSpecialty] = useState('All');
+  const [sortBy, setSortBy] = useState('default');
+
+  // Derived State - محاسبه در حین رندر (بدون useEffect)
+  const filteredDoctors = doctorsData.filter((doctor) => {
+    const matchesSearch =
+      doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesSpecialty =
+      selectedSpecialty === 'All' || doctor.specialty === selectedSpecialty;
+
+    return matchesSearch && matchesSpecialty;
+  });
+
+  // مرتب‌سازی روی یک کپی (نه اصل آرایه)
+  const sortedDoctors = [...filteredDoctors].sort((a, b) => {
+    if (sortBy === 'name') return a.name.localeCompare(b.name);
+    if (sortBy === 'specialty') return a.specialty.localeCompare(b.specialty);
+    return 0;
+  });
 
   return (
     <DashboardLayout title="Find a Doctor">
@@ -16,19 +38,16 @@ const FindDoctor = () => {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
-          <div className="relative">
+          <div className="relative md:col-span-2">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search a doctor by name, specialty"
               className="w-full pl-10 pr-3 py-2 rounded-lg text-sm text-gray-800 focus:outline-none"
             />
           </div>
-          <input
-            type="text"
-            placeholder="Zip Code or Neighborhood"
-            className="px-3 py-2 rounded-lg text-sm text-gray-800 focus:outline-none"
-          />
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-lg text-sm transition">
             SEARCH
           </button>
@@ -44,8 +63,7 @@ const FindDoctor = () => {
               : 'bg-white text-gray-600 border'
           }`}
         >
-          <Map className="w-4 h-4" />
-          Map
+          <Map className="w-4 h-4" /> Map
         </button>
         <button
           onClick={() => setViewMode('list')}
@@ -55,22 +73,29 @@ const FindDoctor = () => {
               : 'bg-white text-gray-600 border'
           }`}
         >
-          <List className="w-4 h-4" />
-          List
+          <List className="w-4 h-4" /> List
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <aside className="lg:col-span-1 bg-white rounded-xl shadow-sm p-5 h-fit">
           <h3 className="font-bold text-gray-700 mb-4">Filter By</h3>
+
           <div className="space-y-3">
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Specialty</label>
-              <select className="w-full border rounded-lg p-2 text-sm">
-                <option>All</option>
-                {specialties.map((s, i) => (<option key={i}>{s}</option>))}
+              <select
+                value={selectedSpecialty}
+                onChange={(e) => setSelectedSpecialty(e.target.value)}
+                className="w-full border rounded-lg p-2 text-sm"
+              >
+                <option value="All">All</option>
+                {specialties.map((s, i) => (
+                  <option key={i} value={s}>{s}</option>
+                ))}
               </select>
             </div>
+
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Gender</label>
               <select className="w-full border rounded-lg p-2 text-sm">
@@ -79,6 +104,7 @@ const FindDoctor = () => {
                 <option>Female</option>
               </select>
             </div>
+
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Condition</label>
               <select className="w-full border rounded-lg p-2 text-sm">
@@ -88,25 +114,57 @@ const FindDoctor = () => {
               </select>
             </div>
           </div>
+
+          <div className="mt-6">
+            <h4 className="text-sm font-semibold text-gray-700 mb-2">Providers Who Treat</h4>
+            <div className="space-y-1 text-sm">
+              <label className="flex items-center gap-2"><input type="checkbox" /> All Ages</label>
+              <label className="flex items-center gap-2"><input type="checkbox" /> Children</label>
+              <label className="flex items-center gap-2"><input type="checkbox" /> Adults</label>
+            </div>
+          </div>
         </aside>
 
         <div className="lg:col-span-3">
           {viewMode === 'list' ? (
             <div>
               <div className="flex justify-between items-center mb-4">
-                <span className="text-sm text-gray-500">Sort By</span>
+                <span className="text-sm text-gray-500">
+                  {sortedDoctors.length} doctor(s) found
+                </span>
                 <div className="flex gap-2">
-                  <button className="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-md">
-                    NEXT AVAILABLE
+                  <button
+                    onClick={() => setSortBy('name')}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-md ${
+                      sortBy === 'name'
+                        ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white'
+                        : 'bg-white border text-gray-600'
+                    }`}
+                  >
+                    NAME
                   </button>
-                  <button className="bg-white border text-gray-600 text-xs font-bold px-3 py-1.5 rounded-md">
-                    DISTANCE
+                  <button
+                    onClick={() => setSortBy('specialty')}
+                    className={`text-xs font-bold px-3 py-1.5 rounded-md ${
+                      sortBy === 'specialty'
+                        ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white'
+                        : 'bg-white border text-gray-600'
+                    }`}
+                  >
+                    SPECIALTY
                   </button>
                 </div>
               </div>
-              {doctorsData.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} />
-              ))}
+
+              {sortedDoctors.length === 0 ? (
+                <div className="bg-white rounded-xl shadow-sm p-10 text-center">
+                  <p className="text-gray-400">هیچ دکتری یافت نشد 😔</p>
+                </div>
+              ) : (
+                sortedDoctors.map((doctor) => (
+                  <DoctorCard key={doctor.id} doctor={doctor} />
+                ))
+              )}
             </div>
           ) : (
             <div className="bg-white rounded-xl shadow-sm p-6 h-96 flex items-center justify-center">
