@@ -9,7 +9,7 @@ const FindClinic = () => {
   const [viewMode, setViewMode] = useState('map');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Derived State - بدون useEffect
+ 
   const filteredClinics = clinicsData.filter((clinic) =>
     clinic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     clinic.address.toLowerCase().includes(searchTerm.toLowerCase())

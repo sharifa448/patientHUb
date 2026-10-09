@@ -19,4 +19,4 @@ const ChartLegend = ({ items }) => {
   );
 };
 
-export default ChartLegend;
+export default ChartLegend;;

@@ -10,7 +10,7 @@ const FindDoctor = () => {
   const [selectedSpecialty, setSelectedSpecialty] = useState('All');
   const [sortBy, setSortBy] = useState('default');
 
-  // Derived State - محاسبه در حین رندر (بدون useEffect)
+
   const filteredDoctors = doctorsData.filter((doctor) => {
     const matchesSearch =
       doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -22,7 +22,7 @@ const FindDoctor = () => {
     return matchesSearch && matchesSpecialty;
   });
 
-  // مرتب‌سازی روی یک کپی (نه اصل آرایه)
+  
   const sortedDoctors = [...filteredDoctors].sort((a, b) => {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     if (sortBy === 'specialty') return a.specialty.localeCompare(b.specialty);
