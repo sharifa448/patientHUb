@@ -2,15 +2,11 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: 'class',
   theme: {
-    extend: {
-      colors: {
-        primary: '#d91b8a',
-        secondary: '#2d9cdb',
-      }
-    },
+    extend: {},
   },
   plugins: [],
 }

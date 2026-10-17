@@ -11,7 +11,7 @@ const PagePlaceholder = ({ title, description, icon: Icon }) => {
         <h1 className="text-3xl font-bold text-gray-800 mb-2">{title}</h1>
         <p className="text-gray-500 text-center max-w-md">{description}</p>
         <div className="mt-8 px-6 py-3 bg-yellow-100 text-yellow-800 rounded-lg text-sm">
-          ⚙️ این صفحه به زودی تکمیل می‌شود
+          
         </div>
       </div>
     </DashboardLayout>
